@@ -14,14 +14,20 @@
         - curl
         - gnupg-agent
         - software-properties-common
+        
     - name: add GPG key
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-    - name: add docker repository to apt
+        
+   - name: Add official Docker APT repository (Ubuntu)
       apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu/dists/jammy/stable/
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
+        filename: 'docker-official'
+        update_cache: yes
+        when: ansible_distribution == 'Ubuntu'
+        
     - name: install docker
       apt:
         name: "{{item}}"
@@ -31,6 +37,8 @@
         - docker-ce
         - docker-ce-cli
         - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
     - name: check docker is active
       service:
         name: docker
