@@ -20,7 +20,7 @@
         state: present
     - name: add docker repository to apt
       apt_repository:
-        repo: repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        repo: deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
         state: present
     - name: install docker
       apt:
