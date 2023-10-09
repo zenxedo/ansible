@@ -8,7 +8,7 @@
       - {  path: "/mnt/frigate", src: "	10.68.69.144:/mnt/tub/frigate" }
       - {  path: "/mnt/immich", src: "	10.68.69.2:/mnt/myVol/immich" }
   tasks:
-      - name: samba install
+      - name: nfs-kernel-server install
         ansible.builtin.apt:
           name: nfs-kernel-server
           update_cache: true
