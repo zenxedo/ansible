@@ -1,0 +1,20 @@
+---
+- hosts: docker
+  become: yes
+  vars:
+    nfsmounts:
+      - {  path: "/mnt/data", src: "	10.68.69.2:/mnt/myVol/data" }
+      - {  path: "/mnt/docker", src: "	10.68.69.2:/mnt/myVol/docker" }
+      - {  path: "/mnt/frigate", src: "	10.68.69.144:/mnt/tub/frigate" }
+      - {  path: "/mnt/immich", src: "	10.68.69.2:/mnt/myVol/immich" }
+  tasks:
+      - name: mount the nfsshare in client side
+        mount:
+          fstype: nfs
+          opts: defaults
+          dump: 0
+          passno: 0
+          state: mounted
+          src: "{{item.src}}"
+          path: "{{item.path}}"
+        with_items: "{{nfsmounts}}"
