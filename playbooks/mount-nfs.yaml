@@ -8,10 +8,11 @@
       - {  path: "/mnt/frigate", src: "	10.68.69.144:/mnt/tub/frigate" }
       - {  path: "/mnt/immich", src: "	10.68.69.2:/mnt/myVol/immich" }
   tasks:
-      - name: base packages
-        apt:
-        name:
-          - nfs-kernel-server
+      - name: samba install
+        ansible.builtin.apt:
+          name: nfs-kernel-server
+          update_cache: true
+          state: latest
       - name: mount the nfsshare in client side
         mount:
           fstype: nfs
