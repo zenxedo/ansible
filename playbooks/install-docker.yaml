@@ -22,7 +22,7 @@
         
     - name: Add official Docker APT repository (Ubuntu)
       apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
         state: present
         
         
