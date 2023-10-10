@@ -1,0 +1,34 @@
+---
+- name: Update and Upgrade System Packages and Webinoly
+  hosts: your_target_host
+  become: yes  # Use become to run commands with elevated privileges if needed
+
+  tasks:
+    - name: Run apt update
+      ansible.builtin.apt:
+        update_cache: yes
+      register: apt_update_result
+
+    - name: Display apt update output
+      debug:
+        var: apt_update_result.stdout_lines
+
+    - name: Run apt upgrade
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+      register: apt_upgrade_result
+
+    - name: Display apt upgrade output
+      debug:
+        var: apt_upgrade_result.stdout_lines
+
+    - name: Run sudo webinoly update
+      ansible.builtin.command:
+        cmd: sudo webinoly update
+      register: webinoly_update_result
+
+    - name: Display webinoly update output
+      debug:
+        var: webinoly_update_result.stdout_lines
