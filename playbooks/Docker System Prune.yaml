@@ -1,0 +1,14 @@
+---
+- name: Docker System Prune
+  hosts: your_target_host
+  become: yes  # Use become to run commands with elevated privileges if needed
+
+  tasks:
+    - name: Run docker system prune -a
+      ansible.builtin.command:
+        cmd: docker system prune -a
+      register: docker_prune_result  # Register the result of the command
+
+    - name: Display docker system prune output
+      debug:
+        var: docker_prune_result.stdout_lines
