@@ -1,0 +1,27 @@
+---
+- name: Docker Compose Pull and Up
+  hosts: your_target_host
+  become: yes  # Use become to run commands with elevated privileges if needed
+
+  tasks:
+    - name: Change to the Docker Compose project directory
+      ansible.builtin.cd:
+        path: /mnt/docker/compose/mediaserver
+
+    - name: Pull Docker images
+      ansible.builtin.shell:
+        cmd: docker-compose pull
+      register: docker_pull_result  # Register the result of the command
+
+    - name: Display docker-compose pull output
+      debug:
+        var: docker_pull_result.stdout_lines
+
+    - name: Run docker-compose up -d
+      ansible.builtin.command:
+        cmd: docker-compose up -d
+      register: docker_compose_result  # Register the result of the command
+
+    - name: Display docker-compose up output
+      debug:
+        var: docker_compose_result.stdout_lines
